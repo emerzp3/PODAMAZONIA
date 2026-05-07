@@ -1,0 +1,1 @@
+﻿window.PERU_LOCATIONS = {"San Martin":[],"Moquegua":[],"Lambayeque":[],"Lima":[],"Huancavelica":[],"Tumbes":[],"Cusco":[],"La Libertad":[],"Apurimac":[],"Loreto":[],"Amazonas":[],"Cajamarca":[],"Junin":[],"Madre de Dios":[],"Ica":[],"Ayacucho":[],"Ucayali":[],"Pasco":[],"Ancash":[],"Puno":[],"Piura":[],"Tacna":[],"Huanuco":[],"Arequipa":[]};

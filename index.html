@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POD Amazonía - Tienda</title>
+    <link rel="icon" href="assets/LOGO.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS for Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        .img-hover-card .secondary-img { opacity: 0; transition: opacity 0.4s ease; }
+        .img-hover-card:hover .secondary-img { opacity: 1; }
+        .payment-methods { margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .pay-method-label { display: flex; align-items: center; gap: 10px; font-weight: 500; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="#tienda" id="logo-home-link" class="logo" style="display: flex; align-items: center;">
+                <img src="assets/LOGO.jpg" alt="POD Amazonía" style="height: 65px; border-radius: 0;">
+            </a>
+            
+            <button class="menu-toggle" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav" id="main-nav">
+                <a href="#tienda" class="nav-link active">Tienda Online</a>
+                <a href="#proyecto" class="nav-link">Proyecto</a>
+                <a href="#ayuda" class="nav-link">Ayuda</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="cart-btn" id="cart-tgl-btn">Cart (<span id="cart-count">0</span>)</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- TIENDA SECTION -->
+        <section id="tienda" class="content-section store-section active">
+            <h1 class="section-title">COLECCIÓN</h1>
+            
+            <div class="category-filters" id="category-filters">
+                <button class="filter-btn active" data-category="all">Ver Todos</button>
+                <button class="filter-btn" data-category="bolsos">Bolsos</button>
+                <button class="filter-btn" data-category="camisas">Camisas</button>
+                <button class="filter-btn" data-category="cuadernos">Cuadernos</button>
+                <button class="filter-btn" data-category="polos">Polos</button>
+                <button class="filter-btn" data-category="tazas">Tazas</button>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <!-- Products will be injected here by app.js -->
+            </div>
+            
+            <div id="empty-state" class="empty-state hidden">
+                <p>No se encontraron productos en esta categoría.</p>
+            </div>
+        </section>
+
+        <!-- PROYECTO SECTION -->
+        <section id="proyecto" class="content-section">
+            <div class="story-container">
+                <div class="story-text">
+                    <h1 class="section-title">EL PROYECTO</h1>
+                    <h2 class="subtitle">Realzando la Comunidad Shipibo-Konibo</h2>
+                    <p>
+                        Este proyecto nace con la misión de exaltar y dar a conocer el profundo legado artístico y espiritual de la comunidad amazónica Shipibo-Konibo. A través del diseño contemporáneo, integramos la estética ancestral para empoderar a los artesanos originarios.
+                    </p>
+                    <p>
+                        <strong>El Kené:</strong> Nuestros trazos se inspiran fuertemente en el <em>Kené</em>, un sistema de diseño geométrico tradicional complejo. Para la comunidad, el Kené no es solo una decoración; es la materialización visual de cantos, vibraciones del mundo espiritual, de la medicina (ayahuasca) y de la conexión íntima del ser humano con el cosmos y la selva. Sus diseños en forma de laberintos y cruces representan los caminos de sanación y la estructura del universo.
+                    </p>
+                </div>
+                <div class="story-image">
+                    <img src="assets/images/shipibo_pattern.png" alt="Patrones Kene Shipibo-Konibo" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- AYUDA SECTION -->
+        <section id="ayuda" class="content-section">
+            <div class="pieta-container">
+                <h1 class="pieta-page-title">Ayuda</h1>
+                <div class="ayuda-grid">
+                    <div class="ayuda-row">
+                        <div class="ayuda-topic">Envíos</div>
+                        <div class="ayuda-content">
+                            <p><strong>Lima:</strong> S/15.00 flat rate (Entrega aprox. en 2 días hábiles).</p>
+                            <p><strong>Provincias:</strong> S/18.00 flat rate (Entrega de 3 a 7 días hábiles).</p>
+                            <p>Tu orden tiene seguimiento en tiempo real vía correos y SMS para que estés tranquilo.</p>
+                        </div>
+                    </div>
+                    <div class="ayuda-row border-top">
+                        <div class="ayuda-topic">Tallas</div>
+                        <div class="ayuda-content">
+                            <p>El tallaje de la marca y de nuestra línea es estrictamente estándar americano de estilo callejero contemporáneo. Es decir, el entalle es regular semi-holgado. Puedes guiarte pidiendo tu talla natural.</p>
+                        </div>
+                    </div>
+                    <div class="ayuda-row border-top">
+                        <div class="ayuda-topic">Cambios & Devoluciones</div>
+                        <div class="ayuda-content">
+                            <p>Los cambios se permiten dentro de los <strong>7 días calendario</strong> desde la compra, presentando tu comprobante y las etiquetas puestas sin rastro de uso.</p>
+                            <p><strong>Atención:</strong> Nosotros no realizamos devoluciones de dinero. Únicamente cambios por otros productos de tienda.</p>
+                            <p><em>Ropa interior y secciones "SALE" no aplican para cambio.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO SECTION -->
+        <section id="contacto" class="content-section">
+            <div class="pieta-container text-center">
+                <h1 class="pieta-page-title">Nosotros</h1>
+                
+                <div class="contacto-block">
+                    <h2>¡Chatea!</h2>
+                    <p>Contáctanos en vivo por si tienes alguna inquietud con tus compras o tallas.</p>
+                    <div class="chat-links">
+                        <a href="https://wa.me/51930419992" target="_blank" class="pieta-link">WhatsApp (+51 930 419 992)</a>
+                        <a href="#" class="pieta-link">Messenger Facebook</a>
+                        <a href="#" class="pieta-link">Instagram</a>
+                    </div>
+                </div>
+
+                <div class="contacto-block border-top">
+                    <h2>¡Escríbenos!</h2>
+                    <p>Mándanos un correo electrónico detallado.</p>
+                    <a href="mailto:hola@projectpieta.com" class="pieta-link">hola@projectpieta.com</a>
+                </div>
+
+                <div class="contacto-block border-top">
+                    <h2>Tiendas Principales (Lima)</h2>
+                    <p><strong>Larcomar:</strong> Malecón de la Reserva 610, Miraflores.</p>
+                    <p><strong>Jockey Plaza:</strong> Av. Javier Prado Este 4200, Surco.</p>
+                    <p><strong>Real Plaza Salaverry:</strong> Av. General Salaverry 2370, Jesús María.</p>
+                    <p><em>(También ubicados en Puruchuco, Bellavista y Comas).</em></p>
+                </div>
+                
+                <div class="contacto-block link-block border-top">
+                    <a href="#" class="pieta-link-underline">Libro de Reclamaciones</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SLIDE-IN CART SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-cart-btn" id="close-cart-btn">✕</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">S/ 0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkout-process-btn" disabled>INICIAR CHECKOUT</button>
+        </div>
+    </aside>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal-content checkout-content">
+            <button class="modal-close" id="checkout-close">✕</button>
+            <form id="checkout-form" class="checkout-split">
+                <!-- Zona Izquierda -->
+                <div class="checkout-left">
+                    <h2 class="modal-title">Checkout</h2>
+                    <p class="modal-desc" style="margin-bottom:1rem;">Detalles de Facturación y Envío</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group"><input type="text" id="chk-nombre" required placeholder="Nombre"></div>
+                        <div class="form-group"><input type="text" id="chk-apellido" required placeholder="Apellidos"></div>
+                    </div>
+                    <div class="form-group"><input type="text" id="chk-dni" required placeholder="DNI" maxlength="8"></div>
+                    <div class="form-row">
+                        <div class="form-group"><input type="email" id="chk-correo" required placeholder="Correo Electrónico"></div>
+                        <div class="form-group"><input type="tel" id="chk-telefono" required placeholder="Teléfono / Celular"></div>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="PE">Perú</option>
+                        </select>
+                    </div>
+                    <div class="form-row" style="margin-bottom: 1rem;">
+                        <div class="form-group">
+                            <select id="checkout-region" required>
+                                <option value="" disabled selected>Región / Departamento</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="checkout-distrito" required disabled>
+                                <option value="" disabled selected>Distrito / Provincia</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label style="font-size: 0.9rem; font-weight: 600; color: #555; margin-bottom:0.5rem; display:block;">Ubica tu punto de entrega en el mapa (Mueve el marcador):</label>
+                        <div id="checkout-map" style="height: 250px; width: 100%; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 1rem; z-index: 10;"></div>
+                    </div>
+                    
+                    <div class="form-group"><input type="text" id="chk-direccion" required placeholder="Dirección de entrega (Calculada automáticamente o manual)"></div>
+                    <div class="form-group" style="display: flex; gap: 10px; align-items: center; background: #f0f8ff; padding: 1rem; border-left: 3px solid #0066cc;">
+                        <input type="checkbox" id="chk-seguro-direccion" required style="width: auto;">
+                        <label for="chk-seguro-direccion" style="font-size: 0.9rem; font-weight: 600;">Confirmo que esta es la dirección exacta donde recibiré la entrega.</label>
+                    </div>
+                    <div class="form-group"><input type="text" id="chk-referencia" placeholder="Color de casa, piso, o referencias (Opcional)" required></div>
+                </div>
+
+                <!-- Zona Derecha -->
+                <div class="checkout-right">
+                    <h3 class="checkout-sub">Método de Pago</h3>
+                    <div class="payment-methods">
+                        <label class="pay-method-label">
+                            <input type="radio" name="pay_method" value="tarjeta" checked id="pay-method-tarjeta"> Tarjeta de Crédito/Débito
+                        </label>
+                        <label class="pay-method-label">
+                            <input type="radio" name="pay_method" value="contraentrega" id="pay-method-contraentrega"> Pago Contraentrega (Efectivo/Yape/Plin)
+                        </label>
+                    </div>
+
+                    <div class="payment-box" id="payment-box-tarjeta">
+                        <div class="form-group"><input type="text" id="tarjeta-numero" required placeholder="Número de Tarjeta" maxlength="19"></div>
+                        <div class="form-group"><input type="text" id="tarjeta-titular" required placeholder="Nombre del Titular"></div>
+                        <div class="form-row">
+                            <div class="form-group"><input type="text" id="tarjeta-venc" required placeholder="Venc. (MM/AA)" maxlength="5"></div>
+                            <div class="form-group"><input type="text" id="tarjeta-cvv" required placeholder="CVC / CVV" maxlength="4"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-summary" style="display: flex; flex-direction: column;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem; font-size: 1rem;">
+                            <span>Subtotal</span>
+                            <strong id="pay-subtotal-amount">S/ 0.00</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem; font-size: 1rem;">
+                            <span>Envío</span>
+                            <strong id="pay-shipping-amount">S/ 0.00</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem; font-size: 1rem; color: #d00;" id="discount-row" class="hidden">
+                            <span>Descuento Envío</span>
+                            <strong id="pay-discount-amount">- S/ 0.00</strong>
+                        </div>
+                        <div class="form-row" style="margin-top: 1rem; align-items: center;">
+                            <div class="form-group" style="flex:2; margin-bottom:0;"><input type="text" id="chk-cupon" placeholder="Código de descuento Opcional" style="text-transform: uppercase;"></div>
+                            <div class="form-group" style="flex:1; margin-bottom:0;"><button type="button" id="apply-coupon-btn" class="pay-btn" style="padding: 0.8rem; font-size: 0.85rem;">Aplicar</button></div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-top: 1rem; padding-top: 1rem; border-top: 1px dotted #ccc; font-size: 1.25rem;">
+                            <span>Total a Pagar</span>
+                            <strong id="pay-total-amount">S/ 0.00</strong>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-submit-btn">Terminar y Pagar</button>
+                    <p class="secure-ssl">🔒 Transacción encriptada y procesada por Mercado Pago.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-content product-detail-content">
+            <button class="modal-close" id="product-close">✕</button>
+            <div class="product-modal-body" id="product-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- TOAST MESSAGES -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3 class="footer-title">POD AMAZONÍA</h3>
+                <p class="footer-text">Productos inspirados en la cultura Shipibo-Konibo.</p>
+            </div>
+            <div class="footer-col">
+                <a href="#ayuda" class="footer-link">Términos y Condiciones</a>
+                <a href="#ayuda" class="footer-link">Política de Privacidad</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 POD Amazonía. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="products.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
